@@ -54,6 +54,9 @@ TriggerNotify.Init = function() {
 		TriggerNotify.Resources[i] = new TriggerResource(res.name, res.name, '');
 	}
 
+	TriggerNotify.DisabledBlds = document.getElementsByClassName('disabled');
+	TriggerNotify.DisabledCount = TriggerNotify.DisabledBlds.length;
+	
 	TriggerNotify.AstronomicalEvent = new TriggerResource("Astronomical Event", "Astronomical Event", 'AstronomicalEvent.wav');	
 
 	TriggerNotify.SetResource('catnip', 'Catnip.wav');
@@ -214,6 +217,16 @@ TriggerNotify.Update = function () {
 		TriggerNotify.AstronomicalEvent.Value = 0;
 	}
 
+	var newblds = document.getElementsByClassName('disabled');
+	var newCount = TriggerNotify.DisabledBlds.length;
+	
+	if (newCount < TriggerNotify.DisabledCount) {
+		TriggerNotify.DefaultSound.play();
+	}
+	
+	TriggerNotify.DisabledBlds = document.getElementsByClassName('disabled');
+	TriggerNotify.DisabledCount = TriggerNotify.DisabledBlds.length;
+	
 	if (updateMenu) {
 		TriggerNotify.WriteMenu();
 	}
@@ -370,6 +383,8 @@ TRIGGERNOTIFY VARIABLES
 TriggerNotify.DefaultSound = new Audio("https://gist.github.com/pernatiy/38bc231506b06fd85473/raw/beep-30.mp3");
 
 /* The list of resources to track. */
+TriggerNotify.DisabledBlds = [];
+TriggerNotify.DisabledCount = 0;
 TriggerNotify.Resources = [];
 TriggerNotify.ResourceSounds = [];
 TriggerNotify.AstronomicalEvent = null;
